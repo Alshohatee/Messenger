@@ -29,22 +29,37 @@ let msg2 = new Message('This is the second message');
 // need to be able to read individual messages
 //user.inbox --> that person's message
 //user.sendMessage
+var d = new Date();
 class User {
   constructor(name){
     this.name= name
     this.inbox = []
+    this.readMessageArr = []
+
   }
-  sendMessages (receiver, content){
-    let message = new Message(receiver, content)
+  sendMessage (receiver, content){
+    let msg = new Message(receiver, content)
     receiver.inbox.push(msg)
-    return `Your message to ${receiver} has been sent `
+
+    return `Your message to ${receiver} has been sent`
+
   }
  readMessage(i) {
-   return this.inbox[i]
+   this.readMessageArr[i] = true
+   return this.inbox[i];
 
+   // this.isRead = 1;
  }
-}
+ isReadMessage (i){
+   if (this.readMessageArr[i] == true){
+     return true;
+   }else {
+   return false;
+   }
+ }
 
+
+}
 class Message {
   constructor( receiver, content){
     this.receiver = receiver
