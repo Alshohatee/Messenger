@@ -33,37 +33,85 @@ var d = new Date();
 class User {
   constructor(name){
     this.name= name
+    this.blockList = []
     this.inbox = []
-    this.readMessageArr = []
+
+
 
   }
   sendMessage (receiver, content){
+    if (receiver.blockList.includes(this)) return "you are blocked"
+    for(let blc of this.blockList){
     let msg = new Message(receiver, content)
-    receiver.inbox.push(msg)
+      if (blc == receiver)
+      receiver.inbox.push(msg)
+
+    }
 
     return `Your message to ${receiver} has been sent`
 
   }
  readMessage(i) {
-   this.readMessageArr[i] = true
+   // this.readMessageArr[i] = true
+   this.inbox[i].seen = true
+    this.inbox[i].timeRead = new Date()
    return this.inbox[i];
+
 
    // this.isRead = 1;
  }
- isReadMessage (i){
-   if (this.readMessageArr[i] == true){
-     return true;
-   }else {
-   return false;
-   }
- }
+ // isReadMessage(i){
+ //   if (this.readMessageArr[i] == true){
+ //     return true;
+ //   }else {
+ //   return false;
+ //   }
+ // }
+ //  timeReadfunc(i){
+ //    if(this.readMessageArr[i] == true){
+ //      return timeRead[i]
+ //    }else {
+ //      return "has not been read"
+ //    }
 
 
+  // }
+
+  viewUnread(){
+    let unread = []
+    for(msg of this.indox){
+      if(mes.seen === false){
+        unread.push(msg)
+        console.log(msg.content);
+      }
+    }
+    return unread
+  }
+
+
+  viewRead(){
+    let read = []
+    for(msg of this.indox){
+      if(mes.seen === true){
+        read.push(msg)
+        console.log(msg.content);
+      }
+    }
+    return read
+  }
+
+  blocking(user){
+      this.blockList.push(user);
+
+  }
 }
+
 class Message {
   constructor( receiver, content){
     this.receiver = receiver
     this.content = content
+    this.seen = false;
+    this.timeRead = new Date()
   }
 }
 
